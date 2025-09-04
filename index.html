@@ -11,6 +11,14 @@
     <form id="track-form">
       <input id="title" type="text" placeholder="Titel" required />
       <input id="duration" type="text" placeholder="mm:ss" required />
+      <select id="genre" required>
+        <option value="" disabled selected>Välj genre</option>
+        <option value="pop">Pop</option>
+        <option value="rock">Rock</option>
+        <option value="other">Annat</option>
+      </select>
+      <label for="favorite">Favorit ⭐</label>
+      <input id="favorite" type="checkbox" />
       <button type="submit">Lägg till</button>
     </form>
 

@@ -4,6 +4,8 @@ const titleInput = document.querySelector("#title");
 const durationInput = document.querySelector("#duration");
 const list = document.querySelector("#list");
 const totalEl = document.querySelector("#total");
+const selectGenre = document.querySelector("#genre");
+const favoriteBox = document.querySelector("#favorite");
 const tracks = [];
 function parseDuration(input) {
     const parts = input.split(":");
@@ -27,7 +29,8 @@ function render() {
     let totalSeconds = 0;
     tracks.forEach((track) => {
         const li = document.createElement("li");
-        li.textContent = `${track.title} (${formatDuration(track.duration)})`;
+        const star = track.favorite ? "⭐" : "";
+        li.textContent = `${track.title} ${star} ${track.genre} (${formatDuration(track.duration)})`;
         list.appendChild(li);
         totalSeconds += track.duration;
     });
@@ -37,14 +40,24 @@ form.addEventListener("submit", (e) => {
     e.preventDefault();
     const title = titleInput.value.trim(); // 1. Läs titel och längd
     const duration = parseDuration(durationInput.value.trim()); // 2. Använd parseDuration
+    const genre = selectGenre.value; // Läs genre
+    const isFavorite = favoriteBox.checked; // Läs favorit
+    console.log({ title, duration, genre, isFavorite });
     if (!title || duration === null) {
         alert("Ogiltig inmatning");
         return;
     }
-    const track = { title, duration }; // 3. Skapa ett Track-objekt
+    const track = {
+        title,
+        duration,
+        genre,
+        favorite: isFavorite,
+    }; // 3. Skapa ett Track-objekt
     tracks.push(track); // 4. Lägg till i tracks-arrayen
     titleInput.value = ""; // 5. Töm formuläret
     durationInput.value = "";
+    selectGenre.selectedIndex = 0;
+    favoriteBox.checked = false;
     render(); // 6. Anropa render()
 });
 export {};
